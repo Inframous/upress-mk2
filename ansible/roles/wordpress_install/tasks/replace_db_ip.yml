@@ -1,0 +1,5 @@
+- name: Setting DB server ip into wp-config.php
+  replace:
+    path: "{{ wordpress_folder }}/wp-config.php"
+    regexp: "{{ old_db_ip}}"
+    replace: "{{ database_ip }}"

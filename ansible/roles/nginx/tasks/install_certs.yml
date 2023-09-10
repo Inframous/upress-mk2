@@ -1,0 +1,20 @@
+- name: Copy Certs File
+  copy:
+    src: "{{ certs_file }}"
+    dest: /tmp
+
+
+- name: Ensure directory exists
+  ansible.builtin.file:
+    path: /etc/letsencrypt/
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+
+- name: Extract Certs
+  unarchive:
+    src: /tmp/{{ certs_file }}
+    dest: /etc/letsencrypt
+    remote_src: yes

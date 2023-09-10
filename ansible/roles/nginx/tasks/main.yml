@@ -1,0 +1,17 @@
+- name: Install NGINX
+  include_tasks: install_nginx.yml
+
+- name: Install certbot
+  include_tasks: install_certbot.yml
+
+- name: Install certs on loadbalancer
+  include_tasks: install_certs.yml
+  when: restore_from_backup
+
+- name: Configure NGINX
+  include_tasks: configure_nginx.yml
+
+- name: Disable SELinux
+  include_tasks: disable_selinux.yml
+
+

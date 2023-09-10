@@ -1,0 +1,18 @@
+- name: Copy file
+  copy:
+    src: "{{ wp_file_path }}/{{ wp_file_name }}"  # Replace with the actual source file path
+    dest: /tmp/{{ wp_file_name }}
+
+
+- name: Extract WordPress content
+  unarchive:
+    src: /tmp/{{ wp_file_name }}
+    dest: "{{ wordpress_folder }}"
+    remote_src: yes
+
+
+- name: Replace text (db address)
+  replace:
+    path: "{{ wordpress_folder }}/wp-config.php"
+    regexp: '10.5.5.41'
+    replace: "{{ database_ip }}"

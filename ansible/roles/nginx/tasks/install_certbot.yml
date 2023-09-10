@@ -1,0 +1,4 @@
+- name: Install Certbot for Nginx
+  yum:
+    name: certbot-nginx
+    state: present

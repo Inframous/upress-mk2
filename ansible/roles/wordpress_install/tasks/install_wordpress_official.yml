@@ -1,0 +1,26 @@
+- name: Download a wordpress latest
+  ansible.builtin.get_url:
+    url: https://wordpress.org/latest.zip
+    dest: /tmp/wordpress_installation.zip
+    mode: '0644'
+
+
+- name: Extract files
+  ansible.builtin.unarchive:
+    src: /tmp/wordpress_installation.zip
+    dest: /tmp/
+    remote_src: yes
+
+- name: Copy contents of /tmp/wordpress to /var/www/html/
+  shell: |
+    rm -rf /var/www/html
+    mv /tmp/wordpress /var/www/html
+
+
+- name: Set Ownership for /var/www/html
+  ansible.builtin.file:
+    path: /var/www/html
+    owner: apache
+    group: apache
+    recurse: yes
+    

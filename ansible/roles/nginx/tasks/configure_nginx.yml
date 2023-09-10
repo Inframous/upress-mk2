@@ -1,0 +1,44 @@
+- name: Dynamically creating simple nginx.conf file (no HTTPS)
+  template:
+    src: basic_nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+
+- name: enable nginx
+  systemd:
+    name: nginx
+    enabled: yes
+
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+
+# - name: Pause until any key is pressed
+#   pause:
+#     prompt: "HTTPS Certs: Please make sure that ports 80 and 443 are open for connections."
+
+
+- name: Obtain and install certificate for Nginx
+  command:
+    cmd: "certbot --nginx -d {{ wp_domain_name }} --non-interactive --agree-tos --email {{ email }}"
+
+
+- name: Copy Updated nginx conf file
+  copy:
+    src: "{{ nginx_basic_configuration_file }}"
+    dest: /etc/nginx/nginx.conf
+
+- name: Dynamically createing nginx final configuration.
+  template:
+    src: ngnix.conf.j2
+    dest: /etc/nginx/nginx.conf
+
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+

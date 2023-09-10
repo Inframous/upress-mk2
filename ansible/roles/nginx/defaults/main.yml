@@ -1,0 +1,10 @@
+---
+## General 
+restore_from_backup: false
+certs_file: files/certs.tar.gz
+
+## Loadbalancer configuration
+wp_domain_name: my.example.com or example.com
+frontend_server_1_ip: 10.0.0.13
+frontend_server_2_ip: 10.0.0.14
+email: person@example.com

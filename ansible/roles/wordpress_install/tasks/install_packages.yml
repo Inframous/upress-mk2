@@ -1,0 +1,41 @@
+- name: Add EPEL and Remi Repositories
+  yum:
+    name:
+      - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      - https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+    state: present
+
+- name: Enable Remi's PHP 7.4 Repository
+  command: yum-config-manager --enable remi-php74
+
+- name: Install necessary packages
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - httpd
+    - mysql
+    - php
+    - php-mysql
+    - php-xml
+    - php-soap
+    - php-xmlrpc
+    - php-mbstring
+    - php-json
+    - php-gd
+    - php-mcrypt
+    - unzip
+    - nano
+
+- name: enable httpd
+  systemd:
+    name: "httpd"
+    enabled: yes
+  notify: restart httpd
+
+- name: restart httpd
+  systemd:
+    name: "httpd"
+    state: restarted
+    enabled: yes

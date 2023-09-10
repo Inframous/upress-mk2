@@ -1,0 +1,7 @@
+---
+wordpress_folder: /var/www/html
+wp_file_name: wpwp.tar.gz
+wp_file_path: files
+database_ip: "10.5.5.41"
+httpd_configuration_file: files/httpd.conf
+fresh_install: true

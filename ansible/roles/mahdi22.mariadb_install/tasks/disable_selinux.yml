@@ -1,0 +1,10 @@
+- name: Disabeling SELinux
+  replace:
+    path: /etc/selinux/config
+    regexp: 'enforcing'
+    replace: 'disabled'
+
+- name: Disabeling selinux (shell_command)
+  shell: |
+    setenforce 0
+  

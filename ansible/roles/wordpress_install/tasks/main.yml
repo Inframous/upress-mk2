@@ -1,0 +1,25 @@
+---
+- name: Installing all packages needed for WordPress.
+  include_tasks: install_packages.yml
+
+
+- name: Uploading and extracting WordPress content.
+  include_tasks: upload_content.yml
+  when: not fresh_install
+
+
+- name: Replaceing Database IP in wp-config.php
+  include_tasks: replace_db_ip.yml
+  when: not fresh_install
+
+- name: Install WordPress (Fresh)
+  include_tasks: install_wordpress_official.yml
+  when: fresh_install
+
+
+- name: Configuring httpd (httpd.conf)
+  include_tasks: configuring_httpd.yml
+
+
+- name: Disable SELinux
+  include_tasks: disable_selinux.yml

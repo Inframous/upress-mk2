@@ -1,0 +1,50 @@
+- hosts: lb
+  roles:
+    - role: nginx
+      become: yes
+      vars:
+        ## HTTPS Certificates.
+        restore_certs_from_backup: false ## Restore letsencrypt certificates
+        certs_file: certs.tar.gz
+        ## Loadbalancer configuration
+        wp_domain_name: my.example.com OR example.com ## Only one domain is allowed
+        email: person@example.com ## For https certificates
+        frontend_server_1_ip: 10.0.0.13
+        frontend_server_2_ip: 10.0.0.14
+
+- hosts: db
+  roles:
+    - role: mahdi22.mariadb_install
+      become: yes
+      vars:
+        mariadb_version: "10.5"
+        deny_remote_connections: false
+        mysql_root_password: "3bq-qeDW_1d5deOdo0"
+        create_database: true
+        database: xdrcoilo_up1
+        create_db_user: true
+        db_user_name: xdrcoilo_up1
+        db_user_password:   
+        import_sql_file: false
+        sql_file_name:
+          - files/database.sql
+
+
+
+# - hosts: frontend
+  roles:
+    - role: wordpress_install
+      become: yes
+      vars:
+        wp_file_name: wp-content.tar.gz
+        wp_file_path: files
+        database_ip: "10.5.5.96"
+        wordpress_folder: /var/www/html
+        httpd_configuration_file: files/httpd.conf
+        ## For a fresh install only:
+        fresh_install: true
+        db_user_name: xdrcoilo_up1
+        db_user_password: 3bq-qeDW_1d5deOdo0
+      
+
+

@@ -1,0 +1,7 @@
+terraform.tfstate
+**/terraform.tfstate
+wpwp
+terraform/.**
+terraform/terraform.tfstate.backup
+terraform/terraform.tfstate
+terraform/credentails.auto.tfvars

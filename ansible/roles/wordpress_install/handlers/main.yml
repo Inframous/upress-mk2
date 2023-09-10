@@ -1,0 +1,20 @@
+---
+# handlers file for roles/wordpress_isntall
+- name: enable httpd
+  systemd:
+    name: "httpd"
+    enabled: yes
+  notify: restart httpd
+
+- name: restart httpd
+  systemd:
+    name: "httpd"
+    state: restarted
+    enabled: yes
+
+- name: Start and enable PHP-FPM
+  service:
+    name: php-fpm
+    state: started
+    enabled: yes
+
